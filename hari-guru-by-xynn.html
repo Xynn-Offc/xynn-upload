@@ -805,12 +805,12 @@
             }
         }
 
-        function scheduleNextTrackAfterDelay(delayMs = 5000) {
+        function scheduleNextTrackAfterDelay(delayMs = 0) {
             clearNextTrackTimer();
             if (!isPlaying) return;
 
             const statusEl = document.getElementById('music-status');
-            if (statusEl) statusEl.textContent = 'Jeda 5 detik sebelum lagu berikutnya...';
+            if (statusEl) statusEl.textContent = 'lagu berikutnya...';
 
             nextTrackTimeout = setTimeout(async () => {
                 if (!isPlaying) return;
@@ -822,7 +822,7 @@
                         isPlaying = true;
                         updateMusicUI(true);
                     } catch (err) {
-                        scheduleNextTrackAfterDelay(5000);
+                        scheduleNextTrackAfterDelay(0);
                     }
                 }
             }, delayMs);
@@ -857,13 +857,13 @@ audioEl.volume = 0.3
 
             audioEl.addEventListener('ended', () => {
                 if (isPlaying) {
-                    scheduleNextTrackAfterDelay(5000);
+                    scheduleNextTrackAfterDelay(0);
                 }
             });
 
             audioEl.addEventListener('error', () => {
                 if (isPlaying) {
-                    scheduleNextTrackAfterDelay(5000);
+                    scheduleNextTrackAfterDelay(0);
                 } else {
                     isPlaying = false;
                     updateMusicUI(false);
@@ -916,7 +916,7 @@ audioEl.volume = 0.3
                     isPlaying = true;
                     updateMusicUI(true);
                 } catch (err) {
-                    scheduleNextTrackAfterDelay(5000);
+                    scheduleNextTrackAfterDelay(0);
                 }
             } else {
                 updateMusicUI(false);
